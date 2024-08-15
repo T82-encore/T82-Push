@@ -9,7 +9,7 @@ public record EventRequestDto (Long eventId, Timestamp eventStartTime){
     public static Event toEntity(EventRequestDto req) {
         return Event.builder()
                 .eventId(req.eventId)
-                .evnetStartTime(req.eventStartTime)
+                .eventStartTime(req.eventStartTime)
                 .build();
     }
 }

@@ -15,7 +15,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      * 입력값 안에 시작하는 공연 가져오기
      */
     @Query("select e from Event e where e.eventStartTime >= :startTime and e.eventStartTime <= :endTime")
-    List<Event> findEventsWithinTimeRange(@Param("currentTime") Timestamp startTime, @Param("endTime") Timestamp endTime);
+    List<Event> findEventsWithinTimeRange(@Param("startTime") Timestamp startTime, @Param("endTime") Timestamp endTime);
 
 
 
