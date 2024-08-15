@@ -39,7 +39,6 @@ public class TicketPushService {
         Timestamp startTime = new Timestamp(currentTime.getTime() - 60 * 1000);
         Timestamp endTime = new Timestamp(currentTime.getTime() + 30 * 60 * 1000); // 30분 후
 
-
         List<Event> events = eventRepository.findEventsWithinTimeRange(startTime, endTime);
         // feign으로 해당하는 유저 찾아오기
         events.forEach(event -> {
