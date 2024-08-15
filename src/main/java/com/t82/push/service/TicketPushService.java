@@ -60,7 +60,6 @@ public class TicketPushService {
                 }
             });
         });
-
     }
 
     @KafkaListener(topics = "pushEventTopic", groupId = "pushEvent-group")
