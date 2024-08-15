@@ -3,6 +3,7 @@ package com.t82.push.service;
 import com.t82.push.dto.request.DeviceRequestDto;
 import com.t82.push.dto.request.EventRequestDto;
 import com.t82.push.dto.KafkaStatus;
+import com.t82.push.entity.Event;
 import com.t82.push.repository.DeviceRepository;
 import com.t82.push.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +25,12 @@ public class TicketPushService {
 
     @Scheduled(cron = "0 0/30 * * * ?")
     public void ticketPush() {
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        Timestamp startTime = new Timestamp(currentTime.getTime() - 60 * 1000); // 30분 후
+        Timestamp endTime = new Timestamp(currentTime.getTime() + 30 * 60 * 1000); // 30분 후
+
+        List<Event> events = eventRepository.findEventsWithinTimeRange(startTime, endTime);
+
 
     }
 

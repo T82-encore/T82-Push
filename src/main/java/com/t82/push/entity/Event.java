@@ -19,5 +19,5 @@ public class Event {
     @Column(name = "EVNET_ID")
     private Long eventId;
     @Column(name = "EVENT_START_TIME")
-    private Timestamp evnetStartTime;
+    private Timestamp eventStartTime;
 }
