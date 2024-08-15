@@ -23,4 +23,5 @@ public class FcmController {
             throw new IllegalArgumentException();
         }
     }
+
 }
