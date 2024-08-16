@@ -6,7 +6,7 @@ import com.google.firebase.messaging.Message;
 import com.t82.push.api.ApiFeign;
 import com.t82.push.dto.request.DeviceRequestDto;
 import com.t82.push.dto.request.EventNotificationRequestDto;
-import com.t82.push.dto.request.EventRequestDto;
+import com.t82.push.dto.request.PushEventDto;
 import com.t82.push.dto.KafkaStatus;
 import com.t82.push.dto.response.UserResponseDto;
 import com.t82.push.entity.Device;
@@ -33,11 +33,11 @@ public class TicketPushService {
     private final ApiFeign apiFeign;
     private final FirebaseMessaging firebaseMessaging;
 
-    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0 0/15 * * * ?")
     public void ticketPush() {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         Timestamp startTime = new Timestamp(currentTime.getTime() - 60 * 1000);
-        Timestamp endTime = new Timestamp(currentTime.getTime() + 30 * 60 * 1000); // 30분 후
+        Timestamp endTime = new Timestamp(currentTime.getTime() + 16 * 60 * 1000); // 15분 후
 
         List<Event> events = eventRepository.findEventsWithinTimeRange(startTime, endTime);
         // feign으로 해당하는 유저 찾아오기
@@ -63,9 +63,8 @@ public class TicketPushService {
     }
 
     @KafkaListener(topics = "pushEventTopic", groupId = "pushEvent-group")
-    public void saveEvent(EventRequestDto req){
-        log.error("come event {}",req.toString());
-        eventRepository.save(EventRequestDto.toEntity(req));
+    public void saveEvent(PushEventDto req){
+        eventRepository.save(PushEventDto.toEntity(req));
     }
 
     @KafkaListener(topics = "deviceTopic", groupId = "pushDevice-group")

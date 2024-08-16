@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @Table(name = "EVENTS")
 public class Event {
     @Id
-    @Column(name = "EVNET_ID")
+    @Column(name = "EVENT_ID")
     private Long eventId;
     @Column(name = "EVENT_START_TIME")
     private Timestamp eventStartTime;
